@@ -10,12 +10,11 @@ var timer = 0;
 var x = 0;
 var y = 0;
 var Actor = /** @class */ (function () {
-    function Actor(x, y, w, h, colour) {
+    function Actor(x, y, w, h) {
         if (x === void 0) { x = 500; }
         if (y === void 0) { y = 0; }
         if (w === void 0) { w = 50; }
         if (h === void 0) { h = 80; }
-        if (colour === void 0) { colour = "red"; }
         this.x = x;
         this.y = y;
         this.w = w;
@@ -81,16 +80,26 @@ var keys = {
         pressed: false,
     },
 };
+var fps = 0;
+var elapsed = 0;
+var current = performance.now();
+var last = performance.now();
 var main = function () {
+    current = performance.now();
+    elapsed = current - last;
+    last = current;
+    fps = 1000 / elapsed;
+    // console.log(fps);
     p.update();
-    // console.log(p.x + " " + p.y);
-    Draw();
+    draw();
     window.requestAnimationFrame(main);
 };
-var Draw = function () {
+var draw = function () {
     c.fillStyle = "lightblue";
     c.fillRect(0, 0, canvas.width, canvas.height);
     p.draw();
+    // c!.font = "36px Arial";
+    // c!.fillText(String(fps), 20, 30);
 };
 main();
 window.addEventListener("keydown", function (event) {

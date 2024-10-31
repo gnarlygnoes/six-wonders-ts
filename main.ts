@@ -24,7 +24,7 @@ class Actor {
   jumpSpeed: number;
   onGround: boolean;
 
-  constructor(x = 500, y = 0, w = 50, h = 80, colour = "red") {
+  constructor(x = 500, y = 0, w = 50, h = 80) {
     this.x = x;
     this.y = y;
     this.w = w;
@@ -95,19 +95,32 @@ const keys = {
   },
 };
 
-const main = () => {
-  p.update();
-  // console.log(p.x + " " + p.y);
+let fps = 0;
+let elapsed = 0;
+let current = performance.now();
+let last = performance.now();
 
-  Draw();
+const main = () => {
+  current = performance.now();
+  elapsed = current - last;
+  last = current;
+  fps = 1000 / elapsed;
+  // console.log(fps);
+
+  p.update();
+  draw();
+
   window.requestAnimationFrame(main);
 };
 
-const Draw = () => {
+const draw = () => {
   c!.fillStyle = "lightblue";
   c!.fillRect(0, 0, canvas!.width, canvas!.height);
 
   p.draw();
+
+  // c!.font = "36px Arial";
+  // c!.fillText(String(fps), 20, 30);
 };
 
 main();
